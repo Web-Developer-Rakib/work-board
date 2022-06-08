@@ -14,7 +14,7 @@ const Main = () => {
             <div className="border border-3">
               <h3 className="text-center text-primary">TO DO</h3>
             </div>
-            <div className="my-3 d-flex flex-column align-items-center">
+            <div className="my-3 d-flex flex-wrap justify-content-around">
               <ToDoCard></ToDoCard>
             </div>
           </div>
@@ -22,7 +22,7 @@ const Main = () => {
             <div className="border border-3">
               <h3 className="text-center text-warning">IN PROGRESS</h3>
             </div>
-            <div className="my-3 d-flex flex-column align-items-center">
+            <div className="my-3 d-flex flex-wrap justify-content-around">
               <InProgressCard></InProgressCard>
             </div>
           </div>
@@ -30,7 +30,7 @@ const Main = () => {
             <div className="border border-3">
               <h3 className="text-center text-success">DONE!</h3>
             </div>
-            <div className="my-3 d-flex flex-column align-items-center">
+            <div className="my-3 d-flex flex-wrap justify-content-around">
               <DoneCard></DoneCard>
             </div>
           </div>
