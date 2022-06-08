@@ -1,9 +1,10 @@
 import React from "react";
 import { Card } from "react-bootstrap";
 
-const InProgressCard = () => {
+const InProgressCard = ({ handleInProgressContext, inProgressContextMenu }) => {
   return (
-    <div className="mb-3">
+    <div onContextMenu={handleInProgressContext} className="mb-3">
+      {inProgressContextMenu}
       <Card border="warning" style={{ width: "18rem" }}>
         <Card.Header className="text-warning">Work in progress</Card.Header>
         <Card.Body>

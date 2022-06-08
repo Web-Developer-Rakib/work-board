@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import BodyContextMenu from "./BodyContextMenu";
 import DoneCard from "./DoneCard";
 import InProgressCard from "./InProgressCard";
+import InProgressContextMenu from "./InProgressContextMenu";
 import Search from "./Search";
 import ToDoCard from "./ToDoCard";
 import ToDOContextMenu from "./ToDOContextMenu";
@@ -33,10 +34,23 @@ const Main = () => {
       <ToDOContextMenu pageX={pageX} pageY={pageY}></ToDOContextMenu>
     );
   };
+  const handleInProgressContext = (e) => {
+    e.preventDefault();
+    setPageX(e.pageX);
+    setPageY(e.pageY);
+    setBodyContextMenu("");
+    setInProgressContextMenu(
+      <InProgressContextMenu
+        pageX={pageX}
+        pageY={pageY}
+      ></InProgressContextMenu>
+    );
+  };
 
   const handleLeftClickOnBody = () => {
     setBodyContextMenu("");
     setToDoContextMenu("");
+    setInProgressContextMenu("");
   };
   return (
     <div onClick={handleLeftClickOnBody}>
@@ -65,7 +79,10 @@ const Main = () => {
               <h3 className="text-center text-warning">IN PROGRESS</h3>
             </div>
             <div className="my-3 d-flex flex-wrap justify-content-around">
-              <InProgressCard></InProgressCard>
+              <InProgressCard
+                handleInProgressContext={handleInProgressContext}
+                inProgressContextMenu={inProgressContextMenu}
+              ></InProgressCard>
             </div>
           </div>
           <div className="col-lg-4 p-3">
