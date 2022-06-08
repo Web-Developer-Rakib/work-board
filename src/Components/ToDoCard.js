@@ -1,9 +1,10 @@
 import React from "react";
 import { Card } from "react-bootstrap";
 
-const ToDoCard = () => {
+const ToDoCard = ({ toDoContextMenu, handleToDoContext }) => {
   return (
-    <div className="mb-3">
+    <div onContextMenu={handleToDoContext} className="mb-3">
+      {toDoContextMenu}
       <Card border="primary" style={{ width: "18rem" }}>
         <Card.Header className="text-primary">Work to do</Card.Header>
         <Card.Body>
