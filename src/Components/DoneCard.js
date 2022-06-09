@@ -1,9 +1,10 @@
 import React from "react";
 import { Card } from "react-bootstrap";
 
-const DoneCard = () => {
+const DoneCard = ({ handleDoneContext, doneContextMenu }) => {
   return (
-    <div className="mb-3">
+    <div onContextMenu={handleDoneContext} className="mb-3">
+      {doneContextMenu}
       <Card border="success" style={{ width: "18rem" }}>
         <Card.Header className="text-success">Work done</Card.Header>
         <Card.Body>

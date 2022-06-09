@@ -1,7 +1,7 @@
 import React from "react";
 import { Dropdown } from "react-bootstrap";
 
-const BodyContextMenu = ({ pageX, pageY, handleShow }) => {
+const DoneContextMenu = ({ pageX, pageY }) => {
   return (
     <div
       style={{
@@ -12,10 +12,12 @@ const BodyContextMenu = ({ pageX, pageY, handleShow }) => {
       }}
     >
       <Dropdown.Menu variant="dark" show>
-        <Dropdown.Item onClick={handleShow}>New Work</Dropdown.Item>
+        <Dropdown.Item>Todo</Dropdown.Item>
+        <Dropdown.Item>In Progress</Dropdown.Item>
+        <Dropdown.Header>Done</Dropdown.Header>
       </Dropdown.Menu>
     </div>
   );
 };
 
-export default BodyContextMenu;
+export default DoneContextMenu;

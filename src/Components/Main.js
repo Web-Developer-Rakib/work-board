@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import AddWorkModal from "./AddWorkModal";
 import BodyContextMenu from "./BodyContextMenu";
 import DoneCard from "./DoneCard";
+import DoneContextMenu from "./DoneContextMenu";
 import InProgressCard from "./InProgressCard";
 import InProgressContextMenu from "./InProgressContextMenu";
 import Search from "./Search";
@@ -12,33 +14,44 @@ const Main = () => {
   const [toDoContextMenu, setToDoContextMenu] = useState("");
   const [inProgressContextMenu, setInProgressContextMenu] = useState("");
   const [doneContextMenu, setDoneContextMenu] = useState("");
-  const [pageX, setPageX] = useState(0);
-  const [pageY, setPageY] = useState(0);
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const num = [1, 2, 3, 4, 5];
   const addToDoContext = (e) => {
     e.preventDefault();
-    setPageX(e.pageX);
-    setPageY(e.pageY);
+    const pageX = e.pageX;
+    const pageY = e.pageY;
     setBodyContextMenu(
-      <BodyContextMenu pageX={pageX} pageY={pageY}></BodyContextMenu>
+      <BodyContextMenu
+        pageX={pageX}
+        pageY={pageY}
+        handleShow={handleShow}
+      ></BodyContextMenu>
     );
     setToDoContextMenu("");
   };
   const handleToDoContext = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    setPageX(e.pageX);
-    setPageY(e.pageY);
+
+    const pageX = e.pageX;
+    const pageY = e.pageY;
+    setInProgressContextMenu("");
+    setDoneContextMenu("");
     setBodyContextMenu("");
     setToDoContextMenu(
       <ToDOContextMenu pageX={pageX} pageY={pageY}></ToDOContextMenu>
     );
   };
+
   const handleInProgressContext = (e) => {
     e.preventDefault();
-    setPageX(e.pageX);
-    setPageY(e.pageY);
+    const pageX = e.pageX;
+    const pageY = e.pageY;
     setBodyContextMenu("");
+    setToDoContextMenu("");
+    setDoneContextMenu("");
     setInProgressContextMenu(
       <InProgressContextMenu
         pageX={pageX}
@@ -46,11 +59,22 @@ const Main = () => {
       ></InProgressContextMenu>
     );
   };
-
+  const handleDoneContext = (e) => {
+    e.preventDefault();
+    const pageX = e.pageX;
+    const pageY = e.pageY;
+    setBodyContextMenu("");
+    setToDoContextMenu("");
+    setInProgressContextMenu("");
+    setDoneContextMenu(
+      <DoneContextMenu pageX={pageX} pageY={pageY}></DoneContextMenu>
+    );
+  };
   const handleLeftClickOnBody = () => {
     setBodyContextMenu("");
     setToDoContextMenu("");
     setInProgressContextMenu("");
+    setDoneContextMenu("");
   };
   return (
     <div onClick={handleLeftClickOnBody}>
@@ -90,11 +114,20 @@ const Main = () => {
               <h3 className="text-center text-success">DONE!</h3>
             </div>
             <div className="my-3 d-flex flex-wrap justify-content-around">
-              <DoneCard></DoneCard>
+              <DoneCard
+                handleDoneContext={handleDoneContext}
+                doneContextMenu={doneContextMenu}
+              ></DoneCard>
             </div>
           </div>
         </div>
       </div>
+      <AddWorkModal
+        show={show}
+        // setShow={setShow}
+        handleClose={handleClose}
+        // handleShow={handleShow}
+      ></AddWorkModal>
     </div>
   );
 };
