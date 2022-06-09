@@ -1,18 +1,16 @@
 import React from "react";
 import { Card } from "react-bootstrap";
 
-const DoneCard = ({ handleDoneContext, doneContextMenu }) => {
+const DoneCard = ({ handleDoneContext, doneContextMenu, work }) => {
+  const { id, workName, description } = work;
   return (
-    <div onContextMenu={handleDoneContext} className="mb-3">
+    <div onContextMenu={handleDoneContext} className="mb-3" key={id}>
       {doneContextMenu}
       <Card border="success" style={{ width: "18rem" }}>
         <Card.Header className="text-success">Work done</Card.Header>
         <Card.Body>
-          <Card.Title>Primary Card Title</Card.Title>
-          <Card.Text>
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
-          </Card.Text>
+          <Card.Title>{workName}</Card.Title>
+          <Card.Text>{description}</Card.Text>
         </Card.Body>
       </Card>
     </div>
