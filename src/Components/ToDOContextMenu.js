@@ -1,7 +1,6 @@
-import React from "react";
 import { Dropdown } from "react-bootstrap";
 
-const ToDOContextMenu = ({ pageX, pageY }) => {
+const ToDOContextMenu = ({ pageX, pageY, handleStatus, handleDelete }) => {
   return (
     <div
       style={{
@@ -18,11 +17,15 @@ const ToDOContextMenu = ({ pageX, pageY }) => {
             <Dropdown.Header onClick={(e) => e.stopPropagation()}>
               Todo
             </Dropdown.Header>
-            <Dropdown.Item>In Progress</Dropdown.Item>
-            <Dropdown.Item>Done</Dropdown.Item>
+            <Dropdown.Item onClick={() => handleStatus("inProgress")}>
+              In Progress
+            </Dropdown.Item>
+            <Dropdown.Item onClick={() => handleStatus("done")}>
+              Done
+            </Dropdown.Item>
           </Dropdown.Menu>
         </div>
-        <Dropdown.Item>Delete</Dropdown.Item>
+        <Dropdown.Item onClick={handleDelete}>Delete</Dropdown.Item>
         <Dropdown.Item>Archive</Dropdown.Item>
       </Dropdown.Menu>
     </div>

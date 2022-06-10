@@ -1,7 +1,11 @@
-import React from "react";
 import { Dropdown } from "react-bootstrap";
 
-const InProgressContextMenu = ({ pageX, pageY }) => {
+const InProgressContextMenu = ({
+  pageX,
+  pageY,
+  handleStatus,
+  handleDelete,
+}) => {
   return (
     <div
       style={{
@@ -15,12 +19,18 @@ const InProgressContextMenu = ({ pageX, pageY }) => {
         <Dropdown.Item id="send-to-menu">Send to</Dropdown.Item>
         <div className="sub-menu">
           <Dropdown.Menu variant="dark" show>
-            <Dropdown.Item>Todo</Dropdown.Item>
-            <Dropdown.Header>In Progress</Dropdown.Header>
-            <Dropdown.Item>Done</Dropdown.Item>
+            <Dropdown.Item onClick={() => handleStatus("toDo")}>
+              Todo
+            </Dropdown.Item>
+            <Dropdown.Header onClick={(e) => e.stopPropagation()}>
+              In Progress
+            </Dropdown.Header>
+            <Dropdown.Item onClick={() => handleStatus("done")}>
+              Done
+            </Dropdown.Item>
           </Dropdown.Menu>
         </div>
-        <Dropdown.Item>Delete</Dropdown.Item>
+        <Dropdown.Item onClick={handleDelete}>Delete</Dropdown.Item>
         <Dropdown.Item>Archive</Dropdown.Item>
       </Dropdown.Menu>
     </div>

@@ -17,7 +17,7 @@ const Main = () => {
   const [doneContextMenu, setDoneContextMenu] = useState("");
   const [works, setWorks] = useState([]);
   const [filteredWorks, setFilteredWorks] = useState([]);
-
+  const [id, setId] = useState("");
   const [searchTxt, setSearchTxt] = useState("");
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -44,7 +44,12 @@ const Main = () => {
     setDoneContextMenu("");
     setBodyContextMenu("");
     setToDoContextMenu(
-      <ToDOContextMenu pageX={pageX} pageY={pageY}></ToDOContextMenu>
+      <ToDOContextMenu
+        pageX={pageX}
+        pageY={pageY}
+        handleStatus={handleStatus}
+        handleDelete={handleDelete}
+      ></ToDOContextMenu>
     );
   };
 
@@ -59,6 +64,8 @@ const Main = () => {
       <InProgressContextMenu
         pageX={pageX}
         pageY={pageY}
+        handleStatus={handleStatus}
+        handleDelete={handleDelete}
       ></InProgressContextMenu>
     );
   };
@@ -70,7 +77,12 @@ const Main = () => {
     setToDoContextMenu("");
     setInProgressContextMenu("");
     setDoneContextMenu(
-      <DoneContextMenu pageX={pageX} pageY={pageY}></DoneContextMenu>
+      <DoneContextMenu
+        handleDelete={handleDelete}
+        handleStatus={handleStatus}
+        pageX={pageX}
+        pageY={pageY}
+      ></DoneContextMenu>
     );
   };
   const handleLeftClickOnBody = () => {
@@ -81,14 +93,14 @@ const Main = () => {
   };
   const handleAddWork = (e) => {
     e.preventDefault();
-    const id = uuidv4();
+    const uid = uuidv4();
     const workName = e.target.workName.value;
     const description = e.target.description.value;
-    const status = "done";
-    const newWork = { id, workName, description, status };
+    const status = "toDo";
+    const newWork = { uid, workName, description, status };
     setWorks([...works, newWork]);
   };
-
+  //Search works
   useEffect(() => {
     let filter = [...works];
     filter = filter.filter((el) => {
@@ -97,6 +109,23 @@ const Main = () => {
     });
     setFilteredWorks([...filter]);
   }, [works, searchTxt]);
+
+  //Delete function
+  const handleDelete = () => {
+    const remainingAfterDelete = filteredWorks.filter(
+      (work) => work.uid !== id
+    );
+    setWorks(remainingAfterDelete);
+  };
+  const handleStatus = (workStatus) => {
+    let updatedWorks = works.map((work) => {
+      if (work.uid === id) {
+        work.status = workStatus;
+      }
+      return work;
+    });
+    setWorks(updatedWorks);
+  };
   return (
     <div onClick={handleLeftClickOnBody}>
       <Search setSearchTxt={setSearchTxt}></Search>
@@ -117,8 +146,7 @@ const Main = () => {
               }
             >
               {bodyContextMenu}
-              {filteredWorks.length === 0 ||
-              filteredWorks.find((work) => work.status !== "toDo") ? (
+              {filteredWorks.length === 0 ? (
                 <div className="h-100 d-flex justify-content-center align-items-center">
                   <h3 className="text-center">
                     Click here with right button to add new work.
@@ -132,6 +160,7 @@ const Main = () => {
                         work={work}
                         toDoContextMenu={toDoContextMenu}
                         handleToDoContext={handleToDoContext}
+                        setId={setId}
                       ></ToDoCard>
                     )
                 )
@@ -150,6 +179,7 @@ const Main = () => {
                       work={work}
                       handleInProgressContext={handleInProgressContext}
                       inProgressContextMenu={inProgressContextMenu}
+                      setId={setId}
                     ></InProgressCard>
                   )
               )}
@@ -167,6 +197,7 @@ const Main = () => {
                       work={work}
                       handleDoneContext={handleDoneContext}
                       doneContextMenu={doneContextMenu}
+                      setId={setId}
                     ></DoneCard>
                   )
               )}
