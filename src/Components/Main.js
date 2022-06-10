@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import AddWorkModal from "./AddWorkModal";
 import BodyContextMenu from "./BodyContextMenu";
@@ -16,7 +16,9 @@ const Main = () => {
   const [inProgressContextMenu, setInProgressContextMenu] = useState("");
   const [doneContextMenu, setDoneContextMenu] = useState("");
   const [works, setWorks] = useState([]);
-  console.log(works);
+  const [filteredWorks, setFilteredWorks] = useState([]);
+
+  const [searchTxt, setSearchTxt] = useState("");
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -82,13 +84,22 @@ const Main = () => {
     const id = uuidv4();
     const workName = e.target.workName.value;
     const description = e.target.description.value;
-    const status = "toDo";
+    const status = "done";
     const newWork = { id, workName, description, status };
     setWorks([...works, newWork]);
   };
+
+  useEffect(() => {
+    let filter = [...works];
+    filter = filter.filter((el) => {
+      let item = el.workName.toLowerCase();
+      return item.includes(searchTxt.toLowerCase());
+    });
+    setFilteredWorks([...filter]);
+  }, [works, searchTxt]);
   return (
     <div onClick={handleLeftClickOnBody}>
-      <Search></Search>
+      <Search setSearchTxt={setSearchTxt}></Search>
       <div className="mx-3">
         <div className="row">
           <div className="col-lg-4 p-3">
@@ -99,18 +110,22 @@ const Main = () => {
               onContextMenu={addToDoContext}
               className="my-3 d-flex flex-wrap justify-content-around"
               style={
-                works.length === 0 ? { height: "300px" } : { height: "auto" }
+                filteredWorks.length === 0 ||
+                filteredWorks.find((work) => work.status !== "toDo")
+                  ? { height: "300px" }
+                  : { height: "auto" }
               }
             >
               {bodyContextMenu}
-              {works.length === 0 ? (
+              {filteredWorks.length === 0 ||
+              filteredWorks.find((work) => work.status !== "toDo") ? (
                 <div className="h-100 d-flex justify-content-center align-items-center">
                   <h3 className="text-center">
                     Click here with right button to add new work.
                   </h3>
                 </div>
               ) : (
-                works.map(
+                filteredWorks.map(
                   (work) =>
                     work.status === "toDo" && (
                       <ToDoCard
@@ -128,7 +143,7 @@ const Main = () => {
               <h3 className="text-center text-warning">IN PROGRESS</h3>
             </div>
             <div className="my-3 d-flex flex-wrap justify-content-around">
-              {works.map(
+              {filteredWorks.map(
                 (work) =>
                   work.status === "inProgress" && (
                     <InProgressCard
@@ -145,7 +160,7 @@ const Main = () => {
               <h3 className="text-center text-success">DONE!</h3>
             </div>
             <div className="my-3 d-flex flex-wrap justify-content-around">
-              {works.map(
+              {filteredWorks.map(
                 (work) =>
                   work.status === "done" && (
                     <DoneCard

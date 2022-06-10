@@ -12,11 +12,16 @@ const InProgressContextMenu = ({ pageX, pageY }) => {
       }}
     >
       <Dropdown.Menu variant="dark" show>
-        <Dropdown.Item>Todo</Dropdown.Item>
-        <Dropdown.Header onClick={() => console.log("click on inprogress")}>
-          In Progress
-        </Dropdown.Header>
-        <Dropdown.Item>Done</Dropdown.Item>
+        <Dropdown.Item id="send-to-menu">Send to</Dropdown.Item>
+        <div className="sub-menu">
+          <Dropdown.Menu variant="dark" show>
+            <Dropdown.Item>Todo</Dropdown.Item>
+            <Dropdown.Header>In Progress</Dropdown.Header>
+            <Dropdown.Item>Done</Dropdown.Item>
+          </Dropdown.Menu>
+        </div>
+        <Dropdown.Item>Delete</Dropdown.Item>
+        <Dropdown.Item>Archive</Dropdown.Item>
       </Dropdown.Menu>
     </div>
   );

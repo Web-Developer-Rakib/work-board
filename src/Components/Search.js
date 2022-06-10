@@ -1,11 +1,14 @@
-import React from "react";
 import { FormControl, InputGroup } from "react-bootstrap";
 
-const Search = () => {
+const Search = ({ setSearchTxt }) => {
   return (
     <div className="my-5 d-flex justify-content-center">
       <InputGroup className="w-50">
-        <FormControl placeholder="Enter your work name here..." />
+        <FormControl
+          type="text"
+          onChange={(e) => setSearchTxt(e.target.value)}
+          placeholder="Enter your work name here..."
+        />
       </InputGroup>
     </div>
   );

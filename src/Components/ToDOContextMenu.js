@@ -12,11 +12,18 @@ const ToDOContextMenu = ({ pageX, pageY }) => {
       }}
     >
       <Dropdown.Menu variant="dark" show>
-        <Dropdown.Header onClick={(e) => e.stopPropagation()}>
-          Todo
-        </Dropdown.Header>
-        <Dropdown.Item>In Progress</Dropdown.Item>
-        <Dropdown.Item>Done</Dropdown.Item>
+        <Dropdown.Item id="send-to-menu">Send to</Dropdown.Item>
+        <div className="sub-menu">
+          <Dropdown.Menu variant="dark" show>
+            <Dropdown.Header onClick={(e) => e.stopPropagation()}>
+              Todo
+            </Dropdown.Header>
+            <Dropdown.Item>In Progress</Dropdown.Item>
+            <Dropdown.Item>Done</Dropdown.Item>
+          </Dropdown.Menu>
+        </div>
+        <Dropdown.Item>Delete</Dropdown.Item>
+        <Dropdown.Item>Archive</Dropdown.Item>
       </Dropdown.Menu>
     </div>
   );

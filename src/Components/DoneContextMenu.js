@@ -12,9 +12,18 @@ const DoneContextMenu = ({ pageX, pageY }) => {
       }}
     >
       <Dropdown.Menu variant="dark" show>
-        <Dropdown.Item>Todo</Dropdown.Item>
-        <Dropdown.Item>In Progress</Dropdown.Item>
-        <Dropdown.Header>Done</Dropdown.Header>
+        <Dropdown.Item id="send-to-menu">Send to</Dropdown.Item>
+        <div className="sub-menu">
+          <Dropdown.Menu variant="dark" show>
+            <Dropdown.Item onClick={(e) => e.stopPropagation()}>
+              Todo
+            </Dropdown.Item>
+            <Dropdown.Item>In Progress</Dropdown.Item>
+            <Dropdown.Header>Done</Dropdown.Header>
+          </Dropdown.Menu>
+        </div>
+        <Dropdown.Item>Delete</Dropdown.Item>
+        <Dropdown.Item>Archive</Dropdown.Item>
       </Dropdown.Menu>
     </div>
   );
