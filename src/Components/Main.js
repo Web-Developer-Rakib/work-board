@@ -134,10 +134,8 @@ const Main = () => {
   }, [works, searchTxt]);
   //Delete function
   const handleDelete = () => {
-    const remainingAfterDelete = filteredWorks.filter(
-      (work) => work.uid !== id
-    );
-    setFilteredWorks(remainingAfterDelete);
+    const remainingAfterDelete = works.filter((work) => work.uid !== id);
+    setWorks(remainingAfterDelete);
   };
   const handleStatus = (workStatus) => {
     const updatedWorks = filteredWorks.filter((work) => {

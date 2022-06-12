@@ -12,7 +12,7 @@ const InProgressCard = ({
     <div className="mb-3" key={uid} onContextMenu={handleInProgressContext}>
       {inProgressContextMenu}
       <Card
-        onContextMenu={() => getId(uid)}
+        onMouseMove={() => getId(uid)}
         border="warning"
         style={{ width: "18rem" }}
       >

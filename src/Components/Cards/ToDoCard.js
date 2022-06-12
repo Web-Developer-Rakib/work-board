@@ -6,7 +6,7 @@ const ToDoCard = ({ toDoContextMenu, handleToDoContext, work, getId }) => {
     <div className="mb-3" key={uid} onContextMenu={handleToDoContext}>
       {toDoContextMenu}
       <Card
-        onContextMenu={() => getId(uid)}
+        onMouseMove={() => getId(uid)}
         border="primary"
         style={{ width: "18rem" }}
       >

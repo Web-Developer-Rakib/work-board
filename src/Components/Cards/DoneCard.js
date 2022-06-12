@@ -6,7 +6,7 @@ const DoneCard = ({ handleDoneContext, doneContextMenu, work, getId }) => {
     <div className="mb-3" key={uid} onContextMenu={handleDoneContext}>
       {doneContextMenu}
       <Card
-        onContextMenu={() => getId(uid)}
+        onMouseMove={() => getId(uid)}
         border="success"
         style={{ width: "18rem" }}
       >

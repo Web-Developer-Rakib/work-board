@@ -21,5 +21,3 @@
 - react-scripts = 5.0.1
 - uuid = ^8.3.2
 - web-vitals = ^2.1.4
-
-##### If you can see any bug in this project, Please let me know on my [Skype](https://join.skype.com/invite/XdH6GMDBy8As).
