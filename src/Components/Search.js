@@ -2,7 +2,7 @@ import { FormControl, InputGroup } from "react-bootstrap";
 
 const Search = ({ setSearchTxt }) => {
   return (
-    <div className="my-5 d-flex justify-content-center">
+    <div className="pb-5 d-flex justify-content-center">
       <InputGroup className="w-50">
         <FormControl
           type="text"

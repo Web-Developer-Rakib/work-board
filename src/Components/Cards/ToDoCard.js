@@ -1,12 +1,12 @@
 import { Card } from "react-bootstrap";
 
-const ToDoCard = ({ toDoContextMenu, handleToDoContext, work, setId }) => {
+const ToDoCard = ({ toDoContextMenu, handleToDoContext, work, getId }) => {
   const { uid, workName, description } = work;
   return (
-    <div className="mb-3" key={uid} onContextMenu={setId(uid)}>
+    <div className="mb-3" key={uid} onContextMenu={handleToDoContext}>
       {toDoContextMenu}
       <Card
-        onContextMenu={handleToDoContext}
+        onContextMenu={() => getId(uid)}
         border="primary"
         style={{ width: "18rem" }}
       >

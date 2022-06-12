@@ -4,14 +4,15 @@ const InProgressCard = ({
   handleInProgressContext,
   inProgressContextMenu,
   work,
-  setId,
+  getId,
 }) => {
   const { uid, workName, description } = work;
+
   return (
-    <div className="mb-3" key={uid} onContextMenu={() => setId(uid)}>
+    <div className="mb-3" key={uid} onContextMenu={handleInProgressContext}>
       {inProgressContextMenu}
       <Card
-        onContextMenu={handleInProgressContext}
+        onContextMenu={() => getId(uid)}
         border="warning"
         style={{ width: "18rem" }}
       >

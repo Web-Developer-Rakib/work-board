@@ -1,6 +1,6 @@
 import { Dropdown } from "react-bootstrap";
 
-const ToDOContextMenu = ({ pageX, pageY, handleStatus, handleDelete }) => {
+const DoneContextMenu = ({ pageX, pageY, handleDelete, handleStatus }) => {
   return (
     <div
       style={{
@@ -11,18 +11,18 @@ const ToDOContextMenu = ({ pageX, pageY, handleStatus, handleDelete }) => {
       }}
     >
       <Dropdown.Menu variant="dark" show>
-        <Dropdown.Item id="send-to-menu">Send to</Dropdown.Item>
+        <Dropdown.Item id="send-to-menu">Send to →</Dropdown.Item>
         <div className="sub-menu">
           <Dropdown.Menu variant="dark" show>
-            <Dropdown.Header onClick={(e) => e.stopPropagation()}>
+            <Dropdown.Item onClick={() => handleStatus("toDo")}>
               Todo
-            </Dropdown.Header>
+            </Dropdown.Item>
             <Dropdown.Item onClick={() => handleStatus("inProgress")}>
               In Progress
             </Dropdown.Item>
-            <Dropdown.Item onClick={() => handleStatus("done")}>
+            <Dropdown.Header onClick={(e) => e.stopPropagation()}>
               Done
-            </Dropdown.Item>
+            </Dropdown.Header>
           </Dropdown.Menu>
         </div>
         <Dropdown.Item onClick={handleDelete}>Delete</Dropdown.Item>
@@ -32,4 +32,4 @@ const ToDOContextMenu = ({ pageX, pageY, handleStatus, handleDelete }) => {
   );
 };
 
-export default ToDOContextMenu;
+export default DoneContextMenu;

@@ -1,12 +1,12 @@
 import { Card } from "react-bootstrap";
 
-const DoneCard = ({ handleDoneContext, doneContextMenu, work, setId }) => {
+const DoneCard = ({ handleDoneContext, doneContextMenu, work, getId }) => {
   const { uid, workName, description } = work;
   return (
-    <div className="mb-3" key={uid} onContextMenu={() => setId(uid)}>
+    <div className="mb-3" key={uid} onContextMenu={handleDoneContext}>
       {doneContextMenu}
       <Card
-        onContextMenu={handleDoneContext}
+        onContextMenu={() => getId(uid)}
         border="success"
         style={{ width: "18rem" }}
       >

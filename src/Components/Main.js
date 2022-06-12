@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import AddWorkModal from "./AddWorkModal";
-import BodyContextMenu from "./BodyContextMenu";
-import DoneCard from "./DoneCard";
-import DoneContextMenu from "./DoneContextMenu";
-import InProgressCard from "./InProgressCard";
-import InProgressContextMenu from "./InProgressContextMenu";
+import DoneCard from "./Cards/DoneCard";
+import InProgressCard from "./Cards/InProgressCard";
+import ToDoCard from "./Cards/ToDoCard";
+import BodyContextMenu from "./Menus/BodyContextMenu";
+import DoneContextMenu from "./Menus/DoneContextMenu";
+import InProgressContextMenu from "./Menus/InProgressContextMenu";
+import ToDOContextMenu from "./Menus/ToDOContextMenu";
 import Search from "./Search";
-import ToDoCard from "./ToDoCard";
-import ToDOContextMenu from "./ToDOContextMenu";
 
 const Main = () => {
   const [bodyContextMenu, setBodyContextMenu] = useState("");
@@ -22,10 +22,19 @@ const Main = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  // Get ID
+  const getId = (id) => {
+    setId(id);
+  };
+  // Add to Do context function
   const addToDoContext = (e) => {
     e.preventDefault();
+    e.stopPropagation();
     const pageX = e.pageX;
     const pageY = e.pageY;
+    setToDoContextMenu("");
+    setInProgressContextMenu("");
+    setDoneContextMenu("");
     setBodyContextMenu(
       <BodyContextMenu
         pageX={pageX}
@@ -33,8 +42,8 @@ const Main = () => {
         handleShow={handleShow}
       ></BodyContextMenu>
     );
-    setToDoContextMenu("");
   };
+  // To do context menu
   const handleToDoContext = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -52,9 +61,10 @@ const Main = () => {
       ></ToDOContextMenu>
     );
   };
-
+  // In progress context menu
   const handleInProgressContext = (e) => {
     e.preventDefault();
+    e.stopPropagation();
     const pageX = e.pageX;
     const pageY = e.pageY;
     setBodyContextMenu("");
@@ -69,8 +79,10 @@ const Main = () => {
       ></InProgressContextMenu>
     );
   };
+  // Done context menu
   const handleDoneContext = (e) => {
     e.preventDefault();
+    e.stopPropagation();
     const pageX = e.pageX;
     const pageY = e.pageY;
     setBodyContextMenu("");
@@ -85,12 +97,22 @@ const Main = () => {
       ></DoneContextMenu>
     );
   };
+  // Control left click behaviour
   const handleLeftClickOnBody = () => {
     setBodyContextMenu("");
     setToDoContextMenu("");
     setInProgressContextMenu("");
     setDoneContextMenu("");
   };
+  // Control right click behaviour
+  const handleRghtClickOnBody = (e) => {
+    e.preventDefault();
+    setBodyContextMenu("");
+    setToDoContextMenu("");
+    setInProgressContextMenu("");
+    setDoneContextMenu("");
+  };
+  // Add work with modal
   const handleAddWork = (e) => {
     e.preventDefault();
     const uid = uuidv4();
@@ -99,6 +121,7 @@ const Main = () => {
     const status = "toDo";
     const newWork = { uid, workName, description, status };
     setWorks([...works, newWork]);
+    setShow(false);
   };
   //Search works
   useEffect(() => {
@@ -109,25 +132,29 @@ const Main = () => {
     });
     setFilteredWorks([...filter]);
   }, [works, searchTxt]);
-
   //Delete function
   const handleDelete = () => {
     const remainingAfterDelete = filteredWorks.filter(
       (work) => work.uid !== id
     );
-    setWorks(remainingAfterDelete);
+    setFilteredWorks(remainingAfterDelete);
   };
   const handleStatus = (workStatus) => {
-    let updatedWorks = works.map((work) => {
+    const updatedWorks = filteredWorks.filter((work) => {
       if (work.uid === id) {
         work.status = workStatus;
       }
       return work;
     });
-    setWorks(updatedWorks);
+    setFilteredWorks(updatedWorks);
   };
   return (
-    <div onClick={handleLeftClickOnBody}>
+    <div
+      onClick={handleLeftClickOnBody}
+      onContextMenu={handleRghtClickOnBody}
+      className="vh-100"
+    >
+      <h2 className="text-center pt-5 pb-3">Search in Work Board</h2>
       <Search setSearchTxt={setSearchTxt}></Search>
       <div className="mx-3">
         <div className="row">
@@ -160,7 +187,7 @@ const Main = () => {
                         work={work}
                         toDoContextMenu={toDoContextMenu}
                         handleToDoContext={handleToDoContext}
-                        setId={setId}
+                        getId={getId}
                       ></ToDoCard>
                     )
                 )
@@ -171,7 +198,10 @@ const Main = () => {
             <div className="border border-3">
               <h3 className="text-center text-warning">IN PROGRESS</h3>
             </div>
-            <div className="my-3 d-flex flex-wrap justify-content-around">
+            <div
+              className="my-3 d-flex flex-wrap justify-content-around"
+              style={{ height: "300px" }}
+            >
               {filteredWorks.map(
                 (work) =>
                   work.status === "inProgress" && (
@@ -179,7 +209,7 @@ const Main = () => {
                       work={work}
                       handleInProgressContext={handleInProgressContext}
                       inProgressContextMenu={inProgressContextMenu}
-                      setId={setId}
+                      getId={getId}
                     ></InProgressCard>
                   )
               )}
@@ -197,7 +227,7 @@ const Main = () => {
                       work={work}
                       handleDoneContext={handleDoneContext}
                       doneContextMenu={doneContextMenu}
-                      setId={setId}
+                      getId={getId}
                     ></DoneCard>
                   )
               )}
@@ -207,9 +237,7 @@ const Main = () => {
       </div>
       <AddWorkModal
         show={show}
-        // setShow={setShow}
         handleClose={handleClose}
-        // handleShow={handleShow}
         handleAddWork={handleAddWork}
       ></AddWorkModal>
     </div>

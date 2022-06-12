@@ -1,4 +1,3 @@
-import React from "react";
 import { Button, FloatingLabel, Form, Modal } from "react-bootstrap";
 
 const AddWorkModal = ({ show, handleClose, handleAddWork }) => {
